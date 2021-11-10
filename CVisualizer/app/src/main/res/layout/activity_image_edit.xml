@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#293241"
+    tools:context=".ImageEditActivity">
+
+    <ImageView
+        android:id="@+id/imageViewEdit"
+        android:layout_width="match_parent"
+        android:layout_height="706dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:background="@color/black"
+        android:contentDescription="imageToEdit"
+        app:srcCompat="@drawable/pencil" />
+
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottomAppBar"
+        style="@style/Widget.MaterialComponents.BottomAppBar.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        app:backgroundTint="#293241"
+        tools:ignore="BottomAppBar" />
+
+    <ImageButton
+        android:id="@+id/resetButton"
+        android:layout_width="63dp"
+        android:layout_height="49dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginBottom="13dp"
+        android:background="@android:color/transparent"
+        app:srcCompat="@android:drawable/ic_menu_revert" />
+
+    <ImageButton
+        android:id="@+id/colorButton"
+        android:layout_width="76dp"
+        android:layout_height="66dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="3dp"
+        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
+        android:scaleType="centerInside"
+        app:srcCompat="@drawable/cvis" />
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/teal_input"
+        android:fontFamily="@font/roboto_medium"
+        android:text="Save"
+        android:textColor="@color/black" />
+
+    <EditText
+        android:id="@+id/currentColorText"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="27dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:text="Current Colour:" />
+
+
+    <ToggleButton
+        android:id="@+id/enableButton"
+        android:textOn="Enabled"
+        android:textOff="Disabled"
+        android:layout_width="wrap_content"
+        android:layout_height="55dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="271dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginEnd="17dp" />
+
+    <ImageView
+        android:id="@+id/selectedColor"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="343dp"
+        android:layout_marginTop="86dp"
+        android:background="@drawable/color_square" />
+
+    <ImageView
+        android:id="@+id/onScreenColor"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="74dp"
+        android:layout_marginTop="86dp"
+        android:background="@drawable/color_square" />
+
+    <TextView
+        android:id="@+id/rgbView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="73dp"
+        android:text="R:\nG:\nB:"
+        android:textColor="#FFFFFF" />
+
+
+</RelativeLayout>
