@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "47224127145",
+    "project_id": "c-visualizer",
+    "storage_bucket": "c-visualizer.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:47224127145:android:2c403ec6c59b31edfc73b8",
+        "android_client_info": {
+          "package_name": "com.example.cvisualizer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "47224127145-d1bqdk7cebv7baicag82h7bb6hrka6v1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkPNUcQyFq8XL6SNndy7CwMqev7XIDra4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "47224127145-d1bqdk7cebv7baicag82h7bb6hrka6v1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

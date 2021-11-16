@@ -66,6 +66,20 @@
         android:text="Save"
         android:textColor="@color/black" />
 
+
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="18dp"
+        android:layout_marginBottom="89dp"
+        android:background="@drawable/teal_input"
+        android:fontFamily="@font/roboto_medium"
+        android:text="Logout"
+        android:textColor="@color/black" />
+
     <EditText
         android:id="@+id/currentColorText"
         android:layout_width="125dp"
@@ -73,33 +87,11 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="3dp"
-        android:layout_marginTop="27dp"
+        android:layout_marginTop="13dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:minHeight="48dp"
         android:text="Current Colour:" />
-
-
-    <ToggleButton
-        android:id="@+id/enableButton"
-        android:textOn="Enabled"
-        android:textOff="Disabled"
-        android:layout_width="wrap_content"
-        android:layout_height="55dp"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="271dp"
-        android:layout_marginTop="26dp"
-        android:layout_marginEnd="17dp" />
-
-    <ImageView
-        android:id="@+id/selectedColor"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="343dp"
-        android:layout_marginTop="86dp"
-        android:background="@drawable/color_square" />
 
     <ImageView
         android:id="@+id/onScreenColor"
@@ -108,7 +100,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="74dp"
-        android:layout_marginTop="86dp"
+        android:layout_marginTop="78dp"
         android:background="@drawable/color_square" />
 
     <TextView
@@ -118,9 +110,31 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="73dp"
+        android:layout_marginTop="65dp"
         android:text="R:\nG:\nB:"
         android:textColor="#FFFFFF" />
+
+    <ToggleButton
+        android:id="@+id/enableButton"
+        android:layout_width="wrap_content"
+        android:layout_height="55dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="271dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="17dp"
+        android:textOff="Disabled"
+        android:textOn="Enabled" />
+
+    <ImageView
+        android:id="@+id/selectedColor"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="343dp"
+        android:layout_marginTop="78dp"
+        android:background="@drawable/color_square" />
 
 
 </RelativeLayout>
