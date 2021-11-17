@@ -15,8 +15,8 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.firebase.auth.FirebaseAuth;
+
 
 
 public class ImageEditActivity extends AppCompatActivity implements View.OnClickListener {
@@ -114,7 +114,6 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
             FirebaseAuth.getInstance().signOut();
             startActivity(new Intent(getApplicationContext(), Login.class));
         }
-
     }
 
     public View.OnTouchListener onTouchListener()
@@ -151,9 +150,6 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
         };
     }
 
-
-
-
     private Bitmap replaceColor(Bitmap src,int fromColor, int targetColor) {
         if(src == null) {
             return null;
@@ -180,5 +176,4 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
 
         return result;
     }
-
 }
