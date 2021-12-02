@@ -6,8 +6,11 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class ColorSelector extends AppCompatActivity implements View.OnClickListener
 {
+
     int newColour;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
