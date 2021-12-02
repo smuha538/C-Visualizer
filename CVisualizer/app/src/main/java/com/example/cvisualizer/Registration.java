@@ -27,6 +27,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.w3c.dom.Document;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LongSummaryStatistics;
 import java.util.Map;
@@ -107,24 +108,24 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                         Map <String,Object> newUser = new HashMap<>();
                         newUser.put("Email", strEmail);
                         newUser.put("Password", strPass);
-                        Map <String, Map <String, Map <String, Object>>> favColour = new HashMap<>();
+                        Map <String, ArrayList<Map <String, Object>>> favColour = new HashMap<>();
                         Map <String, Object> colourValue = new HashMap<>();
                         colourValue.put("Colour", "");
                         colourValue.put("Exists", true);
-                        Map <String, Map<String, Object>> favNum = new HashMap<>();
-                        favNum.put("FirstFav", colourValue);
-                        favNum.put("SecondFav", colourValue);
-                        favNum.put("ThirdFav", colourValue);
-                        favColour.put("FavouriteColour", favNum);
-                        Map <String, Map <String, Map <String, Object>>> freqColour = new HashMap<>();
+                        ArrayList<Map<String, Object>> favArray = new ArrayList<>();
+                        favArray.add(colourValue);
+                        favArray.add(colourValue);
+                        favArray.add(colourValue);
+                        favColour.put("FavouriteColour", favArray);
+                        Map <String, ArrayList<Map <String, Object>>> freqColour = new HashMap<>();
+                        ArrayList<Map<String, Object>> freqArray = new ArrayList<>();
                         Map <String, Object> colourVal = new HashMap<>();
                         colourVal.put("Colour", "");
                         colourVal.put("Frequency", 0);
-                        Map <String, Map<String, Object>> comNum = new HashMap<>();
-                        comNum.put("FirstCommon", colourVal);
-                        comNum.put("SecondCommon", colourVal);
-                        comNum.put("ThirdCommon", colourVal);
-                        freqColour.put("FrequentColour", comNum);
+                        freqArray.add(colourVal);
+                        freqArray.add(colourVal);
+                        freqArray.add(colourVal);
+                        freqColour.put("FrequentColour", freqArray);
 
 
                         referenceDoc.set(newUser).addOnSuccessListener(new OnSuccessListener<Void>() {
