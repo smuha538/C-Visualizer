@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -101,10 +102,54 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                         Toast.makeText(Registration.this, "Successfully Created User", Toast.LENGTH_SHORT).show();
                         UID = fAuth.getCurrentUser().getUid();
                         DocumentReference referenceDoc = database.collection("Users").document(UID);
+                        DocumentReference referenceDoc2 = database.collection("Users").document(UID).collection("CommonColours").document("Common");
+                        DocumentReference referenceDoc3 = database.collection("Users").document(UID).collection("FavouriteColours").document("Favourite");
                         Map <String,Object> newUser = new HashMap<>();
                         newUser.put("Email", strEmail);
                         newUser.put("Password", strPass);
+                        Map <String, Map <String, Map <String, Object>>> favColour = new HashMap<>();
+                        Map <String, Object> colourValue = new HashMap<>();
+                        colourValue.put("Colour", "");
+                        colourValue.put("Exists", true);
+                        Map <String, Map<String, Object>> favNum = new HashMap<>();
+                        favNum.put("FirstFav", colourValue);
+                        favNum.put("SecondFav", colourValue);
+                        favNum.put("ThirdFav", colourValue);
+                        favColour.put("FavouriteColour", favNum);
+                        Map <String, Map <String, Map <String, Object>>> freqColour = new HashMap<>();
+                        Map <String, Object> colourVal = new HashMap<>();
+                        colourVal.put("Colour", "");
+                        colourVal.put("Frequency", 0);
+                        Map <String, Map<String, Object>> comNum = new HashMap<>();
+                        comNum.put("FirstCommon", colourVal);
+                        comNum.put("SecondCommon", colourVal);
+                        comNum.put("ThirdCommon", colourVal);
+                        freqColour.put("FrequentColour", comNum);
+
+
                         referenceDoc.set(newUser).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Log.d(TAG,"Created User Profile For: " + UID);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d(TAG,"Error: " + e.toString());
+                            }
+                        });
+                        referenceDoc3.set(favColour).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Log.d(TAG,"Created User Profile For: " + UID);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d(TAG,"Error: " + e.toString());
+                            }
+                        });
+                        referenceDoc2.set(freqColour).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
                                 Log.d(TAG,"Created User Profile For: " + UID);
@@ -121,8 +166,10 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                     {
                         Toast.makeText(Registration.this,"Error: " + task.getException(),Toast.LENGTH_LONG).show();
                     }
+
                 }
             });
+
         }
         else if (v.getId() == R.id.loginPage)
         {
