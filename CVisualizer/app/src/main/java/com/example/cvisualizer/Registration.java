@@ -161,7 +161,7 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                                 Log.d(TAG,"Error: " + e.toString());
                             }
                         });
-                        startActivity(new Intent(getApplicationContext(), ImageEditActivity.class));
+                        startActivity(new Intent(getApplicationContext(), Camera.class));
                     }
                     else
                     {
