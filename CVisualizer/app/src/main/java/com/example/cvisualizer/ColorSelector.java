@@ -49,7 +49,6 @@ public class ColorSelector extends AppCompatActivity implements View.OnClickList
     Button secButton;
     Button thiButton;
 
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_color_edit);
