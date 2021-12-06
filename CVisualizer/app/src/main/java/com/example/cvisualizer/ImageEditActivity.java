@@ -92,11 +92,9 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
             TextView enableOption = findViewById(R.id.enableButton);
             if (!enable) {
                 enable = true;
-                //enableOption.setText("Enabled");
 
             } else {
                 enable = false;
-                //enableOption.setText("Disabled");
             }
         }
         else if (v.getId() == R.id.colorButton)
