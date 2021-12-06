@@ -5,6 +5,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,6 +19,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -52,6 +54,7 @@ public class ColorSelector extends AppCompatActivity implements View.OnClickList
     Button firButton;
     Button secButton;
     Button thiButton;
+    ImageButton buttonStar;
 
     ActivityResultLauncher<Intent> activityLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -89,8 +92,12 @@ public class ColorSelector extends AppCompatActivity implements View.OnClickList
         firButton = findViewById(R.id.freqColor1);
         secButton = findViewById(R.id.freqColor2);
         thiButton = findViewById(R.id.freqColor3);
+        buttonStar = findViewById(R.id.favorite_button);
         findViewById(R.id.backButton).setOnClickListener(this);
-
+        findViewById(R.id.freqColor1).setOnClickListener(this);
+        findViewById(R.id.freqColor2).setOnClickListener(this);
+        findViewById(R.id.freqColor3).setOnClickListener(this);
+        findViewById(R.id.favorite_button).setOnClickListener(this);
         fAuth = FirebaseAuth.getInstance();
         database = FirebaseFirestore.getInstance();
         UID = fAuth.getCurrentUser().getUid();
@@ -107,6 +114,7 @@ public class ColorSelector extends AppCompatActivity implements View.OnClickList
                 {
                     String rbg = RBG.getText().toString();
                     setColour(rbg, true, null);
+                    favouriteButtonColour();
                 }
                 else
                 {
@@ -126,18 +134,121 @@ public class ColorSelector extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v)
     {
+        ColorDrawable cd = (ColorDrawable) currentColour.getBackground();
+        int colorCode = cd.getColor();
+        ColorDrawable freq;
+        int freColour;
         if (v.getId() == R.id.backButton)
         {
             addFreqToColour();
-            ColorDrawable cd = (ColorDrawable) currentColour.getBackground();
-            int colorCode = cd.getColor();
             Intent back = new Intent();
             back.putExtra("colour", colorCode);
             setResult(1, back);
             ColorSelector.super.onBackPressed();
 
         }
+        else if (v.getId() == R.id.freqColor1)
+        {
+            freq = (ColorDrawable) firButton.getBackground();
+            freColour = freq.getColor();
+            currentColour.setBackgroundColor(freColour);
 
+        }
+        else if (v.getId() == R.id.freqColor2)
+        {
+            freq = (ColorDrawable) secButton.getBackground();
+            freColour = freq.getColor();
+            currentColour.setBackgroundColor(freColour);
+        }
+        else if (v.getId() == R.id.freqColor3)
+        {
+            freq = (ColorDrawable) thiButton.getBackground();
+            freColour = freq.getColor();
+            currentColour.setBackgroundColor(freColour);
+        }
+        else if (v.getId() == R.id.favorite_button)
+        {
+            favouriteAColour();
+        }
+        favouriteButtonColour();
+
+    }
+
+    public void favouriteButtonColour()
+    {
+
+        ColorDrawable cd = (ColorDrawable) currentColour.getBackground();
+        int colourCode = cd.getColor();
+        boolean favourited = false;
+        for (int i = 0; i < favColors.size(); i++)
+        {
+               if(favColors.get(i) == colourCode)
+               {
+                   buttonStar.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(),android.R.drawable.btn_star_big_on));
+                   favourited = true;
+                   break;
+               }
+        }
+        if (!favourited)
+        {
+            buttonStar.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(),android.R.drawable.btn_star_big_off));
+        }
+    }
+
+    public String getCurrentColour()
+    {
+        ColorDrawable cd = (ColorDrawable) currentColour.getBackground();
+        int colourCode = cd.getColor();
+        int r = (colourCode>>16)&0xff;
+        int g = (colourCode>>8)&0xff;
+        int b = colourCode&0xff;
+        String currentColour = r + "," + g + "," + b;
+        return currentColour;
+    }
+    private void favouriteAColour()
+    {
+
+        String addColour = getCurrentColour();
+        reference = database.collection("Users").document(UID).collection("FavouriteColours").document("Favourite");
+        reference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        ArrayList<Map<String, Object>> freArray = (ArrayList<Map<String, Object>>) document.get("FavouriteColour");
+                        boolean exists = false;
+                        for (int i = 0; i < freArray.size(); i++)
+                        {
+                            Map<String, Object> colourObj = freArray.get(i);
+                            String colour = (String) colourObj.get("Colour");
+
+                            if (colour.equals(addColour))
+                            {
+                                freArray.remove(i);
+                                reference.update("FavouriteColour", freArray);
+                                exists = true;
+                                break;
+                            }
+                        }
+                        if (!exists)
+                        {
+                            Map<String, Object> newColourObj = new HashMap<>();
+                            newColourObj.put("Colour", addColour);
+                            freArray.add(newColourObj);
+                            reference.update("FavouriteColour", freArray);
+                        }
+
+                    }
+                    else {
+                        Log.d(TAG, "No such document");
+                    }
+                }
+                else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
     }
 
     public void getFavouriteColour()
@@ -153,18 +264,9 @@ public class ColorSelector extends AppCompatActivity implements View.OnClickList
                 {
                     Map<String, Object> favColour = favArray.get(i);
                     String colour = (String) favColour.get("Colour");
-                    int r;
-                    int g;
-                    int b;
-                    String[] split = colour.split(",");
-                    r = Integer.parseInt(split[0]);
-                    g = Integer.parseInt(split[1]);
-                    b = Integer.parseInt(split[2]);
-                    @SuppressLint("Range") int newColour = Color.rgb(r,g,b);
-                    favColors.add(newColour);
-
+                    setColour(colour, false, "favourite");
                 }
-
+                favouriteButtonColour();
                 initRecyclerView();
             }
         });
@@ -272,16 +374,10 @@ public class ColorSelector extends AppCompatActivity implements View.OnClickList
 
     public void addFreqToColour()
     {
-        ColorDrawable cd = (ColorDrawable) currentColour.getBackground();
-        int colourCode = cd.getColor();
 
-        int r = (colourCode>>16)&0xff;
-        int g = (colourCode>>8)&0xff;
-        int b = colourCode&0xff;
-        String addColour = r + "," + g + "," + b;
+        String addColour = getCurrentColour();
         reference = database.collection("Users").document(UID).collection("CommonColours").document("Common");
         reference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
@@ -328,7 +424,7 @@ public class ColorSelector extends AppCompatActivity implements View.OnClickList
         });
     }
 
-    public void setColour(String colour, boolean textview, String button)
+    public void setColour(String colour, boolean currentColourSet, String type)
     {
         int r;
         int g;
@@ -338,16 +434,20 @@ public class ColorSelector extends AppCompatActivity implements View.OnClickList
         g = Integer.parseInt(split[1]);
         b = Integer.parseInt(split[2]);
         @SuppressLint("Range") int newColour = Color.rgb(r,g,b);
-        if (textview) {
+        if (currentColourSet) {
             currentColour.setBackgroundColor(newColour);
+        }
+        else if (type.equals("favourite"))
+        {
+            favColors.add(newColour);
         }
         else
         {
-            if (button.equals("first"))
+            if (type.equals("first"))
             {
                 firButton.setBackgroundColor(newColour);
             }
-            else if (button.equals("second"))
+            else if (type.equals("second"))
             {
                 secButton.setBackgroundColor(newColour);
             }
@@ -370,6 +470,7 @@ public class ColorSelector extends AppCompatActivity implements View.OnClickList
             public void onOk(AmbilWarnaDialog dialog, int color) {
                 mDefaultColor = color;
                 currentColour.setBackgroundColor(mDefaultColor);
+                favouriteButtonColour();
             }
         });
         colorPicker.show();
@@ -382,5 +483,6 @@ public class ColorSelector extends AppCompatActivity implements View.OnClickList
         favRecycler.setLayoutManager(layoutManager);
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, favColors);
         favRecycler.setAdapter(adapter);
+        favouriteButtonColour();
     }
 }

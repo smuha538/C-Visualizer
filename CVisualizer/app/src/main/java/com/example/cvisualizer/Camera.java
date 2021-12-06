@@ -41,10 +41,12 @@ public class Camera extends AppCompatActivity implements View.OnClickListener{
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     private ImageCapture imageCapture;
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_camera);
+
 
         ActivityCompat.requestPermissions(this, CAMERA_PERMISSION, CAMERA_REQUEST_CODE);
         previewView = findViewById(R.id.previewView);
@@ -65,11 +67,13 @@ public class Camera extends AppCompatActivity implements View.OnClickListener{
         captureButton.setOnClickListener(this);
         Button galleryButton = (Button) this.findViewById(R.id.gallery);
         galleryButton.setOnClickListener(this);
+
     }
 
     @Override
     public void onClick(View v)
     {
+
         switch (v.getId()) {
             case R.id.capture:
                 capturePhoto();

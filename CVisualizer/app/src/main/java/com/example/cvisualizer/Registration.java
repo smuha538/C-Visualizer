@@ -111,7 +111,6 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                         Map <String, ArrayList<Map <String, Object>>> favColour = new HashMap<>();
                         Map <String, Object> colourValue = new HashMap<>();
                         colourValue.put("Colour", "");
-                        colourValue.put("Exists", true);
                         ArrayList<Map<String, Object>> favArray = new ArrayList<>();
                         favArray.add(colourValue);
                         favArray.add(colourValue);
