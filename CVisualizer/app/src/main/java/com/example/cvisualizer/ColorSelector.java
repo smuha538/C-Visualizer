@@ -1,23 +1,27 @@
 package com.example.cvisualizer;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import static android.content.ContentValues.TAG;
-
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import static android.content.ContentValues.TAG;
+import android.annotation.SuppressLint;
+import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.ImageView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -25,41 +29,66 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 
-public class ColorSelector extends AppCompatActivity implements View.OnClickListener {
+public class ColorSelector extends AppCompatActivity implements View.OnClickListener
+{
+    ArrayList<Integer> favColors = new ArrayList<>();
     int mDefaultColor;
     FirebaseAuth fAuth;
     FirebaseFirestore database;
     String UID;
     Button mButton;
     Button selectColour;
-    TextView currentColour;
+    ImageView currentColour;
     EditText RBG;
     DocumentReference reference;
     Button firButton;
     Button secButton;
     Button thiButton;
 
+    ActivityResultLauncher<Intent> activityLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>()
+            {
+                @Override
+                public void onActivityResult(ActivityResult result)
+                {
+                    if (result.getResultCode() == 1)
+                    {
+
+
+                    }
+                }
+
+            }
+
+
+    );
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_color_edit);
-        currentColour = findViewById(R.id.currentColour);
-        RBG = findViewById(R.id.FullRBG);
+
+        Intent main = getIntent();
+        Bundle colorInfo = main.getExtras();
+        int currentC = colorInfo.getInt("color");
+        currentColour = findViewById(R.id.currentColor);
+        currentColour.setBackgroundColor(currentC);
+
+        RBG = findViewById(R.id.enterRBG);
         mDefaultColor = Color.RED;
-        mButton = (Button) findViewById(R.id.button);
-        selectColour = findViewById(R.id.selectRBG);
-        firButton = findViewById(R.id.com1);
-        secButton = findViewById(R.id.com2);
-        thiButton = findViewById(R.id.com3);
+        mButton = (Button) findViewById(R.id.bttnColorSel);
+        selectColour = findViewById(R.id.bttnCurSel);
+        firButton = findViewById(R.id.freqColor1);
+        secButton = findViewById(R.id.freqColor2);
+        thiButton = findViewById(R.id.freqColor3);
         findViewById(R.id.backButton).setOnClickListener(this);
 
         fAuth = FirebaseAuth.getInstance();
@@ -99,11 +128,13 @@ public class ColorSelector extends AppCompatActivity implements View.OnClickList
     {
         if (v.getId() == R.id.backButton)
         {
-//            Intent back = new Intent();
-//            back.putExtra("colour", mDefaultColor);
-//            setResult(1, back);
-//            ColorSelector=.super.onBackPressed();
             addFreqToColour();
+            ColorDrawable cd = (ColorDrawable) currentColour.getBackground();
+            int colorCode = cd.getColor();
+            Intent back = new Intent();
+            back.putExtra("colour", colorCode);
+            setResult(1, back);
+            ColorSelector.super.onBackPressed();
 
         }
 
@@ -117,13 +148,24 @@ public class ColorSelector extends AppCompatActivity implements View.OnClickList
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 ArrayList<Map<String, Object>> favArray = (ArrayList<Map<String, Object>>) value.get("FavouriteColour");
+                favColors = new ArrayList<>();
                 for (int i = 0; i < favArray.size(); i++)
                 {
                     Map<String, Object> favColour = favArray.get(i);
                     String colour = (String) favColour.get("Colour");
-                    setColour(colour, true, null);
+                    int r;
+                    int g;
+                    int b;
+                    String[] split = colour.split(",");
+                    r = Integer.parseInt(split[0]);
+                    g = Integer.parseInt(split[1]);
+                    b = Integer.parseInt(split[2]);
+                    @SuppressLint("Range") int newColour = Color.rgb(r,g,b);
+                    favColors.add(newColour);
+
                 }
 
+                initRecyclerView();
             }
         });
     }
@@ -296,8 +338,7 @@ public class ColorSelector extends AppCompatActivity implements View.OnClickList
         g = Integer.parseInt(split[1]);
         b = Integer.parseInt(split[2]);
         @SuppressLint("Range") int newColour = Color.rgb(r,g,b);
-        if (textview)
-        {
+        if (textview) {
             currentColour.setBackgroundColor(newColour);
         }
         else
@@ -332,5 +373,14 @@ public class ColorSelector extends AppCompatActivity implements View.OnClickList
             }
         });
         colorPicker.show();
+    }
+
+
+    private void initRecyclerView(){
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView favRecycler = findViewById(R.id.favRecycler);
+        favRecycler.setLayoutManager(layoutManager);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, favColors);
+        favRecycler.setAdapter(adapter);
     }
 }

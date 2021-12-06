@@ -15,8 +15,8 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import com.google.firebase.auth.FirebaseAuth;
 
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class ImageEditActivity extends AppCompatActivity implements View.OnClickListener {
@@ -29,7 +29,7 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
     private Bitmap original;
     private boolean enable;
     private boolean set = true;
-    private int colour = Color.MAGENTA;
+    private int colourR = Color.MAGENTA;
     private int pixel;
 
     ActivityResultLauncher<Intent> activityLauncher = registerForActivityResult(
@@ -46,8 +46,8 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
                         int newColour = intent.getIntExtra("colour", 0);
                         if (newColour != 0)
                         {
-                            colour = newColour;
-                            selectedColor.setBackgroundColor(colour);
+                            colourR = newColour;
+                            selectedColor.setBackgroundColor(colourR);
                         }
 
                     }
@@ -68,7 +68,7 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
         rgbView = findViewById(R.id.rgbView);
         onScreenColor = findViewById(R.id.onScreenColor);
         selectedColor = findViewById(R.id.selectedColor);
-        selectedColor.setBackgroundColor(colour);
+        selectedColor.setBackgroundColor(colourR);
 
         imageView.setDrawingCacheEnabled(true);
         imageView.buildDrawingCache(true);
@@ -77,7 +77,7 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
         findViewById(R.id.enableButton).setOnClickListener(this);
         findViewById(R.id.colorButton).setOnClickListener(this);
         findViewById(R.id.resetButton).setOnClickListener(this);
-        findViewById(R.id.logout).setOnClickListener(this);
+        findViewById(R.id.bttnColorSel).setOnClickListener(this);
 
         imageView.setOnTouchListener(onTouchListener());
 
@@ -101,7 +101,10 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
         }
         else if (v.getId() == R.id.colorButton)
         {
+            Bundle info = new Bundle();
             Intent colour = new Intent(ImageEditActivity.this, ColorSelector.class);
+            info.putInt("color", colourR);
+            colour.putExtras(info);
             activityLauncher.launch(colour);
         }
         else if (v.getId() == R.id.resetButton)
@@ -110,7 +113,7 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
             imageView.setImageBitmap(bitmap);
             bitmap = Bitmap.createBitmap(imageView.getDrawingCache());
         }
-        else if ((v.getId() == R.id.logout)){
+        else if ((v.getId() == R.id.bttnColorSel)){
             FirebaseAuth.getInstance().signOut();
             startActivity(new Intent(getApplicationContext(), Login.class));
         }
@@ -140,7 +143,7 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
                 }
 
                 if(enable) {
-                    bitmap = replaceColor(bitmap, pixel, colour);
+                    bitmap = replaceColor(bitmap, pixel, colourR);
                     imageView.setImageBitmap(bitmap);
                 }
 
@@ -176,4 +179,5 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
 
         return result;
     }
+
 }

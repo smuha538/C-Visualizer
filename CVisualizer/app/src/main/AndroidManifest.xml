@@ -36,7 +36,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ImageEditActivity"/>
-        <activity android:name=".ColorSelector"/>
+        <activity android:name=".ColorSelector"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".Login"/>
         <activity android:name=".Camera"/>
     </application>
