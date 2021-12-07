@@ -1,10 +1,13 @@
 package com.example.cvisualizer;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.net.Uri;
+import android.view.View;
+
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.ListResult;
@@ -12,7 +15,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
 
-public class Storage extends AppCompatActivity
+public class Storage extends AppCompatActivity implements View.OnClickListener
 {
     private FirebaseAuth fAuth;
     private FirebaseStorage storage;
@@ -27,6 +30,7 @@ public class Storage extends AppCompatActivity
         setContentView(R.layout.activity_storage);
         imagelist=new ArrayList<>();
         recyclerView=findViewById(R.id.recyclerview);
+        findViewById(R.id.prevButton).setOnClickListener(this);
         adapter=new ImageAdapter(imagelist,this);
         recyclerView.setLayoutManager(new LinearLayoutManager(null));
         fAuth = FirebaseAuth.getInstance();
@@ -53,4 +57,11 @@ public class Storage extends AppCompatActivity
         });
     }
 
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.prevButton){
+            Intent i = new Intent(Storage.this, Camera.class);
+            startActivity(i);
+        }
+    }
 }

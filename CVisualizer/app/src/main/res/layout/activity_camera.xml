@@ -31,16 +31,17 @@
 
         <Button
             android:id="@+id/gallery"
-            android:layout_width="wrap_content"
-            android:layout_height="88dp"
+            android:layout_width="79dp"
+            android:layout_height="79dp"
             android:layout_gravity="bottom|right"
-            android:layout_marginEnd="5dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="5dp"
             android:background="@android:drawable/ic_menu_gallery" />
 
         <Button
             android:id="@+id/logoutButton"
-            android:layout_width="76dp"
-            android:layout_height="wrap_content"
+            android:layout_width="85dp"
+            android:layout_height="50dp"
             android:layout_gravity="bottom|left"
             android:layout_margin="20dp"
             android:background="@drawable/teal_input"
