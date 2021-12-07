@@ -12,8 +12,13 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ToggleButton;
+
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -47,6 +52,7 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
     private FirebaseStorage storage;
     private FirebaseAuth fAuth;
     private String UID;
+    private EditText projectName;
     private boolean enable;
     private boolean set = true;
     private int colourR = Color.WHITE;
@@ -94,12 +100,13 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
         imageView.buildDrawingCache(true);
         fAuth = FirebaseAuth.getInstance();
         UID = fAuth.getUid();
+        projectName = findViewById(R.id.projectName);
         findViewById(R.id.saveButton).setOnClickListener(this);
         findViewById(R.id.enableButton).setOnClickListener(this);
         findViewById(R.id.colorButton).setOnClickListener(this);
         findViewById(R.id.resetButton).setOnClickListener(this);
         findViewById(R.id.backButton).setOnClickListener(this);
-        findViewById(R.id.logoutButton).setOnClickListener(this);
+
 
         imageView.setOnTouchListener(onTouchListener());
 
@@ -111,12 +118,14 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
     public void onClick(View v) {
 
         if (v.getId() == R.id.enableButton) {
-            TextView enableOption = findViewById(R.id.enableButton);
+            ToggleButton enableOption = findViewById(R.id.enableButton);
             if (!enable) {
                 enable = true;
+                enableOption.setBackgroundColor(Color.GREEN);
 
             } else {
                 enable = false;
+                enableOption.setBackgroundColor(Color.RED);
             }
         }
         else if (v.getId() == R.id.colorButton)
@@ -133,12 +142,14 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
             bitmap = Bitmap.createBitmap(imageView.getDrawingCache());
         }
         else if (v.getId() == R.id.saveButton) {
+            String strProjectName = projectName.getText().toString();
+
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bitmap = imageView.getDrawingCache();
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
             byte[] data = stream.toByteArray();
             StorageReference imageStorage = storage.getReference();
-            StorageReference imageRef = imageStorage.child("images/" + UID + "/imageName");
+            StorageReference imageRef = imageStorage.child("images/" + UID + "/" + strProjectName);
 
             Task<Uri> urlTask = imageRef.putBytes(data).continueWithTask(task -> {
                 if (!task.isSuccessful()) {
@@ -153,7 +164,8 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
 
                 }
             });
-
+            Toast.makeText(ImageEditActivity.this, strProjectName + " Saved to Gallery", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(getApplicationContext(), Camera.class));
         }
         else if ((v.getId() == R.id.backButton)){
             startActivity(new Intent(getApplicationContext(), Camera.class));
