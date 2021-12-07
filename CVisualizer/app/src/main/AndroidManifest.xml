@@ -40,6 +40,7 @@
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".Login"/>
         <activity android:name=".Camera"/>
+        <activity android:name=".Storage"/>
     </application>
 
 </manifest>

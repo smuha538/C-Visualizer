@@ -91,7 +91,8 @@ public class Camera extends AppCompatActivity implements View.OnClickListener{
     }
 
     private void viewGallery() {
-
+        Intent intent = new Intent(Camera.this, Storage.class);
+        startActivity(intent);
     }
 
     private void capturePhoto() {
