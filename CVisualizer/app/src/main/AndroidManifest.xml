@@ -27,7 +27,7 @@
         </provider>
 
         <activity
-            android:name=".Registration"
+            android:name=".Login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,10 +35,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ImageEditActivity"/>
+        <activity android:name=".ImageEditActivity"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".ColorSelector"
             android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".Login"/>
+        <activity android:name=".Registration"/>
         <activity android:name=".Camera"/>
         <activity android:name=".Storage"/>
     </application>
