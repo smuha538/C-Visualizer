@@ -152,7 +152,12 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="49dp"
         android:layout_marginTop="183dp"
-        android:hint="Enter RGB Value (R,G,B)" />
+        android:hint="Enter RGB Value (R,G,B)"
+        android:lines="1"
+        android:maxLength="11"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textAlignment="center" />
 
     <TextView
         android:id="@+id/textView6"

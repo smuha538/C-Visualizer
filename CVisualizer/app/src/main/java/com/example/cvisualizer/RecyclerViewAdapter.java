@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,15 +45,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         ImageView color;
 
+
         public ViewHolder(View itemView) {
             super(itemView);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    Intent i = new Intent(v.getContext(),ColorSelector.class);
-//                    i.putExtras("color",favColors.get(getBindingAdapterPosition()));
-
+                  int color = favColors.get(getBindingAdapterPosition());
+                    int r = (color>>16)&0xff;
+                    int g = (color>>8)&0xff;
+                    int b = color&0xff;
+                    String currentColour = r + "," + g + "," + b;
+                    Toast.makeText(context, currentColour, Toast.LENGTH_LONG).show();
 
                 }
             });
