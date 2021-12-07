@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LifecycleOwner;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
@@ -24,6 +25,7 @@ import android.widget.Toast;
 
 import com.example.cvisualizer.R;
 import com.google.common.util.concurrent.ListenableFuture;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.File;
 import java.util.Date;
@@ -67,7 +69,7 @@ public class Camera extends AppCompatActivity implements View.OnClickListener{
         captureButton.setOnClickListener(this);
         Button galleryButton = (Button) this.findViewById(R.id.gallery);
         galleryButton.setOnClickListener(this);
-
+        findViewById(R.id.logoutButton).setOnClickListener(this);
     }
 
     @Override
@@ -80,6 +82,10 @@ public class Camera extends AppCompatActivity implements View.OnClickListener{
                 break;
             case R.id.gallery:
                 viewGallery();
+                break;
+            case R.id.logoutButton:
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(getApplicationContext(), Login.class));
                 break;
         }
     }
