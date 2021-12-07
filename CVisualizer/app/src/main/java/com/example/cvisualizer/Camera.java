@@ -70,7 +70,6 @@ public class Camera extends AppCompatActivity implements View.OnClickListener{
         Button galleryButton = (Button) this.findViewById(R.id.gallery);
         galleryButton.setOnClickListener(this);
         findViewById(R.id.logoutButton).setOnClickListener(this);
-
     }
 
     @Override
