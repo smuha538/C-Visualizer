@@ -5,7 +5,11 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,9 +18,22 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.net.URI;
 
 
 public class ImageEditActivity extends AppCompatActivity implements View.OnClickListener {
@@ -27,9 +44,12 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
     private ImageView onScreenColor;
     private Bitmap bitmap;
     private Bitmap original;
+    private FirebaseStorage storage;
+    private FirebaseAuth fAuth;
+    private String UID;
     private boolean enable;
     private boolean set = true;
-    private int colourR = Color.MAGENTA;
+    private int colourR = Color.WHITE;
     private int pixel;
 
     ActivityResultLauncher<Intent> activityLauncher = registerForActivityResult(
@@ -69,11 +89,12 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
         onScreenColor = findViewById(R.id.onScreenColor);
         selectedColor = findViewById(R.id.selectedColor);
         selectedColor.setBackgroundColor(colourR);
-
+        storage = FirebaseStorage.getInstance();
         imageView.setDrawingCacheEnabled(true);
         imageView.buildDrawingCache(true);
-
-
+        fAuth = FirebaseAuth.getInstance();
+        UID = fAuth.getUid();
+        findViewById(R.id.saveButton).setOnClickListener(this);
         findViewById(R.id.enableButton).setOnClickListener(this);
         findViewById(R.id.colorButton).setOnClickListener(this);
         findViewById(R.id.resetButton).setOnClickListener(this);
@@ -111,11 +132,37 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
             imageView.setImageBitmap(bitmap);
             bitmap = Bitmap.createBitmap(imageView.getDrawingCache());
         }
-        else if ((v.getId() == R.id.bttnColorSel)){
+        else if (v.getId() == R.id.bttnColorSel){
             FirebaseAuth.getInstance().signOut();
             startActivity(new Intent(getApplicationContext(), Login.class));
         }
+        else if (v.getId() == R.id.saveButton)
+        {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap = imageView.getDrawingCache();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] data = stream.toByteArray();
+            StorageReference imageStorage = storage.getReference();
+            StorageReference imageRef = imageStorage.child("images/" + UID +"/imageName");
+
+            Task<Uri> urlTask = imageRef.putBytes(data).continueWithTask(task -> {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
+
+                return imageRef.getDownloadUrl();
+            }).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    Uri downloadUri = task.getResult();
+                    String uri = downloadUri.toString();
+
+                }
+            });
+
+        }
     }
+
+
 
     public View.OnTouchListener onTouchListener()
     {
