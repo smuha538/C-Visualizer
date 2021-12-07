@@ -77,7 +77,8 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
         findViewById(R.id.enableButton).setOnClickListener(this);
         findViewById(R.id.colorButton).setOnClickListener(this);
         findViewById(R.id.resetButton).setOnClickListener(this);
-        findViewById(R.id.bttnColorSel).setOnClickListener(this);
+        findViewById(R.id.backButton).setOnClickListener(this);
+        findViewById(R.id.logoutButton).setOnClickListener(this);
 
         imageView.setOnTouchListener(onTouchListener());
 
@@ -111,9 +112,12 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
             imageView.setImageBitmap(bitmap);
             bitmap = Bitmap.createBitmap(imageView.getDrawingCache());
         }
-        else if ((v.getId() == R.id.bttnColorSel)){
+        else if ((v.getId() == R.id.logoutButton)){
             FirebaseAuth.getInstance().signOut();
             startActivity(new Intent(getApplicationContext(), Login.class));
+        }
+        else if ((v.getId() == R.id.backButton)){
+            startActivity(new Intent(getApplicationContext(), Camera.class));
         }
     }
 
