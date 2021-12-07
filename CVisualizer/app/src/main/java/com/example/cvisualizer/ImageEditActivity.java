@@ -132,11 +132,7 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
             bitmap = original.copy(original.getConfig(),true);
             imageView.setImageBitmap(bitmap);
             bitmap = Bitmap.createBitmap(imageView.getDrawingCache());
-        }
-        else if (v.getId() == R.id.bttnColorSel){
-            FirebaseAuth.getInstance().signOut();
-            startActivity(new Intent(getApplicationContext(), Login.class));
-        }
+        
         else if (v.getId() == R.id.saveButton)
         {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
