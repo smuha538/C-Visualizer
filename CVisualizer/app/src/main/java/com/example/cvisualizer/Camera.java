@@ -115,6 +115,9 @@ public class Camera extends AppCompatActivity implements View.OnClickListener{
                     @Override
                     public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
                         Toast.makeText(Camera.this, "Photo saved successfully", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(Camera.this, ImageEditActivity.class);
+                        intent.putExtra("path", photoFile.getAbsoluteFile());
+                        startActivity(intent);
 
                     }
 
