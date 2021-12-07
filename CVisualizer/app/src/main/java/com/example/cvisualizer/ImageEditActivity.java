@@ -127,20 +127,18 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
             colour.putExtras(info);
             activityLauncher.launch(colour);
         }
-        else if (v.getId() == R.id.resetButton)
-        {
-            bitmap = original.copy(original.getConfig(),true);
+        else if (v.getId() == R.id.resetButton) {
+            bitmap = original.copy(original.getConfig(), true);
             imageView.setImageBitmap(bitmap);
             bitmap = Bitmap.createBitmap(imageView.getDrawingCache());
-        
-        else if (v.getId() == R.id.saveButton)
-        {
+        }
+        else if (v.getId() == R.id.saveButton) {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bitmap = imageView.getDrawingCache();
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
             byte[] data = stream.toByteArray();
             StorageReference imageStorage = storage.getReference();
-            StorageReference imageRef = imageStorage.child("images/" + UID +"/imageName");
+            StorageReference imageRef = imageStorage.child("images/" + UID + "/imageName");
 
             Task<Uri> urlTask = imageRef.putBytes(data).continueWithTask(task -> {
                 if (!task.isSuccessful()) {
@@ -156,10 +154,6 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
                 }
             });
 
-}
-        else if ((v.getId() == R.id.logoutButton)){
-            FirebaseAuth.getInstance().signOut();
-            startActivity(new Intent(getApplicationContext(), Login.class));
         }
         else if ((v.getId() == R.id.backButton)){
             startActivity(new Intent(getApplicationContext(), Camera.class));
