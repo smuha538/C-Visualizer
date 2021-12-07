@@ -41,6 +41,7 @@
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".Registration"/>
         <activity android:name=".Camera"/>
+        <activity android:name=".Storage"/>
     </application>
 
 </manifest>

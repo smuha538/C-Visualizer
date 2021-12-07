@@ -106,8 +106,6 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
         findViewById(R.id.colorButton).setOnClickListener(this);
         findViewById(R.id.resetButton).setOnClickListener(this);
         findViewById(R.id.backButton).setOnClickListener(this);
-
-
         imageView.setOnTouchListener(onTouchListener());
 
 
