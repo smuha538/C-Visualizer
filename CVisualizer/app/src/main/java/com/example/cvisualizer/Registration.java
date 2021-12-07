@@ -60,11 +60,6 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
         database = FirebaseFirestore.getInstance();
         fAuth = FirebaseAuth.getInstance();
 
-//        //if(fAuth.getCurrentUser() != null)
-//        {
-//            startActivity(new Intent(getApplicationContext(), ImageEditActivity.class));
-//            finish();
-//        }
 
     }
 
@@ -160,7 +155,7 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                                 Log.d(TAG,"Error: " + e.toString());
                             }
                         });
-                        startActivity(new Intent(getApplicationContext(), Camera.class));
+                        startActivity(new Intent(getApplicationContext(), Login.class));
                     }
                     else
                     {

@@ -67,7 +67,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(Login.this, "Logged In Successfully", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), ImageEditActivity.class));
+                            startActivity(new Intent(getApplicationContext(), Camera.class));
                         } else {
                             Toast.makeText(Login.this, "Error: " + task.getException(), Toast.LENGTH_LONG).show();
                         }

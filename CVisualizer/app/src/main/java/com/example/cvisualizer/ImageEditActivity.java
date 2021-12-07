@@ -4,6 +4,7 @@ package com.example.cvisualizer;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
@@ -78,10 +79,7 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
 
                     }
                 }
-
             }
-
-
     );
 
     @SuppressLint({"ClickableViewAccessibility", "WrongThread"})
@@ -89,7 +87,6 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_edit);
-
         imageView = findViewById(R.id.imageViewEdit);
         rgbView = findViewById(R.id.rgbView);
         onScreenColor = findViewById(R.id.onScreenColor);
@@ -107,7 +104,11 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
         findViewById(R.id.resetButton).setOnClickListener(this);
         findViewById(R.id.backButton).setOnClickListener(this);
         imageView.setOnTouchListener(onTouchListener());
-
+        Intent camera = getIntent();
+        Bundle imageInfo = camera.getExtras();
+        File cameraImage = (File) imageInfo.get("path");
+        Bitmap photo = BitmapFactory.decodeFile(cameraImage.getAbsolutePath());
+        imageView.setImageBitmap(photo);
 
     }
 
