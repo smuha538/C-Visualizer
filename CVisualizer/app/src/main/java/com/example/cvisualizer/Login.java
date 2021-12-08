@@ -69,7 +69,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
                             Toast.makeText(Login.this, "Logged In Successfully", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(), Camera.class));
                         } else {
+                            progBar.setVisibility(View.INVISIBLE);
                             Toast.makeText(Login.this, "Error: " + task.getException(), Toast.LENGTH_LONG).show();
+
                         }
                     }
                 });

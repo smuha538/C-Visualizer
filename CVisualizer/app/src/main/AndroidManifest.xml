@@ -32,6 +32,7 @@
         <activity android:name=".Registration"/>
         <activity android:name=".Camera"/>
         <activity android:name=".Storage"/>
+        <activity android:name=".ImageDetail"/>
     </application>
 
 </manifest>
