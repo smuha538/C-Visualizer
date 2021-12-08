@@ -56,24 +56,6 @@ public class ColorSelector extends AppCompatActivity implements View.OnClickList
     Button thiButton;
     ImageButton buttonStar;
 
-    ActivityResultLauncher<Intent> activityLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>()
-            {
-                @Override
-                public void onActivityResult(ActivityResult result)
-                {
-                    if (result.getResultCode() == 1)
-                    {
-
-
-                    }
-                }
-
-            }
-
-
-    );
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
