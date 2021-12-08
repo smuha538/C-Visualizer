@@ -142,9 +142,15 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
             activityLauncher.launch(colour);
         }
         else if (v.getId() == R.id.resetButton) {
-            bitmap = original.copy(original.getConfig(), true);
-            imageView.setImageBitmap(bitmap);
-            bitmap = Bitmap.createBitmap(imageView.getDrawingCache());
+            if (original == null)
+            {
+                Toast.makeText(this,"No Changes Have Been Made", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                bitmap = original.copy(original.getConfig(), true);
+                imageView.setImageBitmap(bitmap);
+                bitmap = Bitmap.createBitmap(imageView.getDrawingCache());
+            }
         }
         else if (v.getId() == R.id.saveButton) {
             String strProjectName = projectName.getText().toString();
@@ -169,7 +175,7 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
 
                 }
             });
-            Toast.makeText(ImageEditActivity.this, strProjectName + " Saved to Cloud Storage", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ImageEditActivity.this, strProjectName + " is Saved to the Cloud Storage", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(getApplicationContext(), Camera.class));
         }
         else if ((v.getId() == R.id.backButton)){
