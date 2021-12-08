@@ -242,14 +242,15 @@ public class ColorSelector extends AppCompatActivity implements View.OnClickList
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 ArrayList<Map<String, Object>> favArray = (ArrayList<Map<String, Object>>) value.get("FavouriteColour");
                 favColors = new ArrayList<>();
-                for (int i = 0; i < favArray.size(); i++)
-                {
-                    Map<String, Object> favColour = favArray.get(i);
-                    String colour = (String) favColour.get("Colour");
-                    setColour(colour, false, "favourite");
+                if (!favArray.isEmpty()) {
+                    for (int i = 0; i < favArray.size(); i++) {
+                        Map<String, Object> favColour = favArray.get(i);
+                        String colour = (String) favColour.get("Colour");
+                        setColour(colour, false, "favourite");
+                    }
+                    favouriteButtonColour();
+                    initRecyclerView();
                 }
-                favouriteButtonColour();
-                initRecyclerView();
             }
         });
     }

@@ -104,21 +104,25 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                         newUser.put("Email", strEmail);
                         newUser.put("Password", strPass);
                         Map <String, ArrayList<Map <String, Object>>> favColour = new HashMap<>();
-                        Map <String, Object> colourValue = new HashMap<>();
-                        colourValue.put("Colour", "");
+                        Map <String, Object> colourFavOne = new HashMap<>();
+                        colourFavOne.put("Colour", "255,215,0");
                         ArrayList<Map<String, Object>> favArray = new ArrayList<>();
-                        favArray.add(colourValue);
-                        favArray.add(colourValue);
-                        favArray.add(colourValue);
+                        favArray.add(colourFavOne);
                         favColour.put("FavouriteColour", favArray);
                         Map <String, ArrayList<Map <String, Object>>> freqColour = new HashMap<>();
                         ArrayList<Map<String, Object>> freqArray = new ArrayList<>();
-                        Map <String, Object> colourVal = new HashMap<>();
-                        colourVal.put("Colour", "");
-                        colourVal.put("Frequency", 0);
-                        freqArray.add(colourVal);
-                        freqArray.add(colourVal);
-                        freqArray.add(colourVal);
+                        Map <String, Object> colourComOne = new HashMap<>();
+                        Map <String, Object> colourComTwo = new HashMap<>();
+                        Map <String, Object> colourComThree = new HashMap<>();
+                        colourComOne.put("Colour", "255,0,0");
+                        colourComOne.put("Frequency", "0");
+                        colourComTwo.put("Colour", "0,255,0");
+                        colourComTwo.put("Frequency", "1");
+                        colourComThree.put("Colour", "0,0,255");
+                        colourComThree.put("Frequency", "2");
+                        freqArray.add(colourComOne);
+                        freqArray.add(colourComTwo);
+                        freqArray.add(colourComThree);
                         freqColour.put("FrequentColour", freqArray);
 
 
@@ -159,6 +163,7 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                     }
                     else
                     {
+                        progBar.setVisibility(View.INVISIBLE);
                         Toast.makeText(Registration.this,"Error: " + task.getException(),Toast.LENGTH_LONG).show();
                     }
 

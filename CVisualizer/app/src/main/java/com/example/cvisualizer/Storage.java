@@ -15,6 +15,10 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
 
+/**
+ * This body of code was borrowed from:
+ * https://www.geeksforgeeks.org/how-to-view-all-the-uploaded-images-in-firebase-storage/
+ */
 public class Storage extends AppCompatActivity implements View.OnClickListener
 {
     private FirebaseAuth fAuth;
@@ -31,7 +35,7 @@ public class Storage extends AppCompatActivity implements View.OnClickListener
         imagelist=new ArrayList<>();
         recyclerView=findViewById(R.id.recyclerview);
         findViewById(R.id.prevButton).setOnClickListener(this);
-        adapter=new ImageAdapter(imagelist,this);
+        adapter = new ImageAdapter(imagelist,this);
         recyclerView.setLayoutManager(new LinearLayoutManager(null));
         fAuth = FirebaseAuth.getInstance();
         UID = fAuth.getUid();

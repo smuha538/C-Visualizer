@@ -109,6 +109,12 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
         File cameraImage = (File) imageInfo.get("path");
         Bitmap photo = BitmapFactory.decodeFile(cameraImage.getAbsolutePath());
         imageView.setImageBitmap(photo);
+        String name = (String) imageInfo.get("name");
+        if (!name.equals(""))
+        {
+            projectName.setText(name);
+        }
+
 
     }
 
@@ -163,7 +169,7 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
 
                 }
             });
-            Toast.makeText(ImageEditActivity.this, strProjectName + " Saved to Gallery", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ImageEditActivity.this, strProjectName + " Saved to Cloud Storage", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(getApplicationContext(), Camera.class));
         }
         else if ((v.getId() == R.id.backButton)){
@@ -208,6 +214,14 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
         };
     }
 
+    /**
+     * This body of code was borrowed from:
+     * https://shaikhhamadali.blogspot.com/2013/08/changereplacementremove-pixel-colors-in.html
+     * @param src
+     * @param fromColor
+     * @param targetColor
+     * @return result
+     */
     private Bitmap replaceColor(Bitmap src,int fromColor, int targetColor) {
         if(src == null) {
             return null;
