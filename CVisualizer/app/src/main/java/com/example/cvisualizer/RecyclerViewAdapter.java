@@ -1,5 +1,6 @@
 package com.example.cvisualizer;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public RecyclerViewAdapter(Context context, ArrayList<Integer> favColors) {
         this.favColors = favColors;
         this.context = context;
+
     }
 
     @Override
@@ -58,7 +60,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     int b = color&0xff;
                     String currentColour = r + "," + g + "," + b;
                     Toast.makeText(context, currentColour, Toast.LENGTH_LONG).show();
-
                 }
             });
             color = itemView.findViewById(R.id.favColor);
