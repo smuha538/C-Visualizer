@@ -44,9 +44,9 @@
             android:layout_height="50dp"
             android:layout_gravity="bottom|left"
             android:layout_margin="20dp"
-            android:background="@drawable/teal_input"
+            android:background="@drawable/red_input"
             android:text="Log out"
-            android:textColor="@color/black" />
+            android:textColor="@color/white" />
     </FrameLayout>
 
 </LinearLayout>
