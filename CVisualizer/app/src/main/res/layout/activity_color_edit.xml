@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#293241"
+    tools:context=".ColorSelector">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="138dp"
+        android:text="OR"
+        android:textSize="24sp" />
+
+    <ImageView
+        android:id="@+id/currentColor"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="152dp"
+        android:layout_marginTop="313dp"
+        android:background="@drawable/color_square" />
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="265dp"
+        android:text="Current Color:"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="2dp"
+        android:layout_marginBottom="143dp"
+        android:text="Commonly Used"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="291dp"
+        android:text="Favourites"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+
+    <Button
+        android:id="@+id/bttnCurSel"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="257dp"
+        android:layout_marginTop="182dp"
+        android:background="@drawable/teal_input"
+        android:text="Apply"
+        android:textColor="@color/black">
+
+    </Button>
+
+    <Button
+        android:id="@+id/bttnColorSel"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="122dp"
+        android:layout_marginTop="63dp"
+        android:background="@drawable/teal_input"
+        android:text="Colour Palette"
+        android:textColor="@color/black">
+
+    </Button>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/favRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginBottom="191dp"
+        android:orientation="horizontal" />
+
+    <Button
+        android:id="@+id/freqColor1"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="64dp"
+        android:layout_marginBottom="67dp"
+        android:background="@drawable/color_square_freq" />
+
+    <Button
+        android:id="@+id/freqColor2"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="166dp"
+        android:layout_marginBottom="65dp"
+        android:background="@drawable/color_square_freq" />
+
+    <Button
+        android:id="@+id/freqColor3"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="268dp"
+        android:layout_marginBottom="64dp"
+        android:background="@drawable/color_square_freq" />
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="Back" />
+
+    <EditText
+        android:id="@+id/enterRBG"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="49dp"
+        android:layout_marginTop="183dp"
+        android:hint="Enter RGB Value (R,G,B)"
+        android:lines="1"
+        android:maxLength="11"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="68dp"
+        android:layout_marginBottom="54dp"
+        android:text="Most Common"
+        android:textColor="#5E5B5B"
+        android:textSize="8sp" />
+
+    <ImageButton
+        android:id="@+id/favorite_button"
+        android:layout_width="60dp"
+        android:layout_height="51dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="63dp"
+        android:layout_marginEnd="37dp"
+        android:layout_marginBottom="339dp"
+        android:layout_toEndOf="@+id/currentColor"
+        android:background="#00ffffff"
+        android:scaleX="2.2"
+        android:scaleY="2.2"
+        android:src="@android:drawable/btn_star" />
+
+</RelativeLayout>
