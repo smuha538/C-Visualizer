@@ -32,7 +32,10 @@ import java.util.HashMap;
 import java.util.LongSummaryStatistics;
 import java.util.Map;
 
-
+/**
+ * This class allows the user to create an account, which saves on firebase and creates a custom database
+ * for the user
+ */
 public class Registration extends AppCompatActivity implements View.OnClickListener
 {
     private FirebaseAuth fAuth;

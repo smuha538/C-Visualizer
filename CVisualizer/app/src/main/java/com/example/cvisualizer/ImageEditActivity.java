@@ -6,40 +6,26 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
-
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.net.URI;
 
 
 public class ImageEditActivity extends AppCompatActivity implements View.OnClickListener {
@@ -59,6 +45,9 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
     private int colourR = Color.WHITE;
     private int pixel;
 
+    /**
+     * Gets the user selected colour from the Colour Selector Class
+     */
     ActivityResultLauncher<Intent> activityLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>()
@@ -121,7 +110,7 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
 
     @SuppressLint("SetTextI18n")
     public void onClick(View v) {
-
+         // Toggles the ability to change the colour or just view the rbg values and colour of the hovered pixel
         if (v.getId() == R.id.enableButton) {
             ToggleButton enableOption = findViewById(R.id.enableButton);
             if (!enable) {
@@ -133,6 +122,7 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
                 enableOption.setBackgroundColor(Color.RED);
             }
         }
+         // Lets the user go to the colour selector activity
         else if (v.getId() == R.id.colorButton)
         {
             Bundle info = new Bundle();
@@ -141,6 +131,7 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
             colour.putExtras(info);
             activityLauncher.launch(colour);
         }
+         // Lets the user get the original bitmap to have a fresh start
         else if (v.getId() == R.id.resetButton) {
             if (original == null)
             {
@@ -152,6 +143,7 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
                 bitmap = Bitmap.createBitmap(imageView.getDrawingCache());
             }
         }
+         // Lets the user to save the bitmap to the firebase storage
         else if (v.getId() == R.id.saveButton) {
             String strProjectName = projectName.getText().toString();
 
@@ -185,7 +177,11 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
     }
 
 
-
+    /**
+     * This listener gets the rbg value of the pixel the user clicks on and lets them
+     * to change the colour of the selected pixel.
+     * @return true
+     */
     public View.OnTouchListener onTouchListener()
     {
         return new View.OnTouchListener()
@@ -223,9 +219,12 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
     /**
      * This body of code was borrowed from:
      * https://shaikhhamadali.blogspot.com/2013/08/changereplacementremove-pixel-colors-in.html
-     * @param src
-     * @param fromColor
-     * @param targetColor
+     *
+     * This method gets a bitmap and recreates a new bitmap with the dimensions of the original, whilst
+     * substituting the selected pixel colour with the target pixel colour.
+     * @param src bitmap
+     * @param fromColor selected pixel colour
+     * @param targetColor target pixel colour
      * @return result
      */
     private Bitmap replaceColor(Bitmap src,int fromColor, int targetColor) {

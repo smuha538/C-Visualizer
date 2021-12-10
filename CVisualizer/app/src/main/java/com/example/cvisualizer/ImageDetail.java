@@ -4,16 +4,12 @@ package com.example.cvisualizer;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
@@ -31,6 +27,10 @@ public class ImageDetail extends AppCompatActivity implements View.OnClickListen
     private File sendFile;
     private String name;
 
+    /**
+     * Displays the image and its name for the user to view
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -68,6 +68,7 @@ public class ImageDetail extends AppCompatActivity implements View.OnClickListen
     public void onClick(View v)
     {
         Intent activity;
+         // Deletes the image from the firebase storage
         if (v.getId() == R.id.deleteButton)
         {
             storage.delete();
@@ -75,11 +76,13 @@ public class ImageDetail extends AppCompatActivity implements View.OnClickListen
             activity = new Intent(this, Storage.class);
             startActivity(activity);
         }
+         // Sends the user back to the gallery/storage
         else if (v.getId() == R.id.returnButton)
         {
             activity = new Intent(ImageDetail.this, Storage.class);
             startActivity(activity);
         }
+         // Sends the image path to the Image Edit Activity for editing
         else if (v.getId() == R.id.editButton)
         {
             activity = new Intent(ImageDetail.this, ImageEditActivity.class);
