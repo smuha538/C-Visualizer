@@ -14,7 +14,6 @@ import androidx.camera.view.PreviewView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LifecycleOwner;
-
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,17 +21,19 @@ import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
 import com.example.cvisualizer.R;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.firebase.auth.FirebaseAuth;
-
 import java.io.File;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 
-/*
+
+/**
+ * The Camera class that provides the camera functionality mainly used for the app.
+ * Asks users for permission to use camera for the app.
+ *
  *  Code borrowed from https://medium.com/swlh/introduction-to-androids-camerax-with-java-ca384c522c5
  *  and https://www.youtube.com/watch?v=IrwhjDtpIU0
  */
@@ -43,12 +44,17 @@ public class Camera extends AppCompatActivity implements View.OnClickListener{
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     private ImageCapture imageCapture;
 
-
+    /**
+     * On first use of Camera activity, system asks user for permission to use camera.
+     *
+     * Code borrowed partly from https://medium.com/swlh/introduction-to-androids-camerax-with-java-ca384c522c5
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
-
 
         ActivityCompat.requestPermissions(this, CAMERA_PERMISSION, CAMERA_REQUEST_CODE);
         previewView = findViewById(R.id.previewView);
@@ -72,6 +78,11 @@ public class Camera extends AppCompatActivity implements View.OnClickListener{
         findViewById(R.id.logoutButton).setOnClickListener(this);
     }
 
+    /**
+     * There are 3 buttons on the camera layout, the capture, the gallery, and the logout button.
+     *
+     * @param v
+     */
     @Override
     public void onClick(View v)
     {
@@ -90,11 +101,21 @@ public class Camera extends AppCompatActivity implements View.OnClickListener{
         }
     }
 
+    /**
+     * Helper method for transferring over to the Storage class to view users' gallery.
+     */
     private void viewGallery() {
         Intent intent = new Intent(Camera.this, Storage.class);
         startActivity(intent);
     }
 
+    /**
+     * Helper method for onClick() for capturing a photograph.
+     * Image is first saved to sdk file in the phone's
+     * CameraX directory as a .jpg. Path of the file
+     * is retrieved if image save is successful and then
+     * sent as Intent to ImageEditActivity class.
+     */
     private void capturePhoto() {
         File photoDir = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES),
                 "CameraXPhotos");
@@ -129,10 +150,28 @@ public class Camera extends AppCompatActivity implements View.OnClickListener{
         );
     }
 
+    /**
+     * Helper method for capturePhoto() to return an Executor.
+     * The Executor runs enqueued tasks on the main thread associated with the class's context
+     *
+     * Code borrowed from https://www.youtube.com/watch?v=IrwhjDtpIU0
+     *
+     * @return ContextCompat.getMainExecutor(this)
+     */
     private Executor getExecutor() {
         return ContextCompat.getMainExecutor(this);
     }
 
+    /**
+     * Binds ImageAnalyzer to camera provider created in onCreate() and
+     * adapts to camera's rotations. Also locks camera lens to record the
+     * back camera of the phone.
+     *
+     * Code borrowed from both https://www.youtube.com/watch?v=IrwhjDtpIU0 and
+     * https://medium.com/swlh/introduction-to-androids-camerax-with-java-ca384c522c5
+     *
+     * @param cameraProvider
+     */
     private void bindImageAnalysis(ProcessCameraProvider cameraProvider) {
 
         ImageAnalysis imageAnalysis =

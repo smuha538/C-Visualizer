@@ -4,7 +4,9 @@ package com.example.cvisualizer;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,10 +16,13 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
 import java.io.File;
 import java.io.IOException;
 
+  /**
+     * Displays the image and its name for the user to view
+     * @param savedInstanceState
+     */
 public class ImageDetail extends AppCompatActivity implements View.OnClickListener
 {
     private StorageReference storage;
@@ -27,10 +32,7 @@ public class ImageDetail extends AppCompatActivity implements View.OnClickListen
     private File sendFile;
     private String name;
 
-    /**
-     * Displays the image and its name for the user to view
-     * @param savedInstanceState
-     */
+  
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {

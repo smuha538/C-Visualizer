@@ -6,10 +6,14 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,15 +23,24 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.net.URI;
 
-
+/**
+* This class lets the user edit an image and save it
+*/
 public class ImageEditActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageView imageView;
@@ -176,7 +189,6 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
-
     /**
      * This listener gets the rbg value of the pixel the user clicks on and lets them
      * to change the colour of the selected pixel.
@@ -225,7 +237,7 @@ public class ImageEditActivity extends AppCompatActivity implements View.OnClick
      * @param src bitmap
      * @param fromColor selected pixel colour
      * @param targetColor target pixel colour
-     * @return result
+     * @return result new bitmap
      */
     private Bitmap replaceColor(Bitmap src,int fromColor, int targetColor) {
         if(src == null) {

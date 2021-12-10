@@ -1,13 +1,21 @@
 package com.example.cvisualizer;
 
-import static android.content.ContentValues.TAG;
-import android.annotation.SuppressLint;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import static android.content.ContentValues.TAG;
+import android.annotation.SuppressLint;
+import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -30,9 +38,11 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 import yuku.ambilwarna.AmbilWarnaDialog;
 
+/**
+* This class lets users select a colour
+*/
 public class ColorSelector extends AppCompatActivity implements View.OnClickListener
 {
     ArrayList<Integer> favColors = new ArrayList<>();
@@ -126,6 +136,7 @@ public class ColorSelector extends AppCompatActivity implements View.OnClickList
             ColorSelector.super.onBackPressed();
 
         }
+
          // Lets the user pick the colour from the most commonly used colour
         else if (v.getId() == R.id.freqColor1)
         {
@@ -134,6 +145,7 @@ public class ColorSelector extends AppCompatActivity implements View.OnClickList
             currentColour.setBackgroundColor(freColour);
 
         }
+
         //  Lets the user pick the colour from the second most commonly used colour
         else if (v.getId() == R.id.freqColor2)
         {
@@ -141,6 +153,7 @@ public class ColorSelector extends AppCompatActivity implements View.OnClickList
             freColour = freq.getColor();
             currentColour.setBackgroundColor(freColour);
         }
+
           //Lets the user pick the colour from the third most commonly used colour
         else if (v.getId() == R.id.freqColor3)
         {
@@ -148,6 +161,7 @@ public class ColorSelector extends AppCompatActivity implements View.OnClickList
             freColour = freq.getColor();
             currentColour.setBackgroundColor(freColour);
         }
+
          // Lets the user favourite a colour
         else if (v.getId() == R.id.favorite_button)
         {
@@ -499,7 +513,6 @@ public class ColorSelector extends AppCompatActivity implements View.OnClickList
         });
         colorPicker.show();
     }
-
 
     /**
      * This recyclerview displays all the favourite colours on the screen

@@ -1,3 +1,8 @@
+
+/*
+This class is the adapter that binds together the recycleview of the activity_storage.xml with the
+layout_storedimages to show saved pictures from the database passed in as an arraylist from the parent class.
+ */
 package com.example.cvisualizer;
 
 import android.content.Context;
@@ -10,7 +15,6 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
-
 import java.util.ArrayList;
 
 /**
@@ -27,7 +31,12 @@ class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
         this.context = context;
     }
 
-
+    /**
+     * This inflates the layout to display the the contents within the recyclerview. Initializes ViewHolder
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @NonNull
     @Override
     public ImageAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -35,16 +44,31 @@ class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
         return new ViewHolder(view);
     }
 
+    /**
+     * This method binds the data set values/contents (based on position in the arraylist) to the view.
+     * The data is passed to the viewHolder
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(@NonNull ImageAdapter.ViewHolder holder, int position) {
         Glide.with(holder.itemView.getContext()).load(imageList.get(position)).into(holder.imageView);
     }
 
+    /**
+     * Gets the size of the imageList ArrayList
+     * This method returns the size of the collection that contains the items we want to display.
+     *
+     * @return
+     */
     @Override
     public int getItemCount() {
         return imageList.size();
     }
 
+    /**
+     * Object that represents each item in our collection
+     */
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         public ViewHolder(@NonNull View itemView) {
