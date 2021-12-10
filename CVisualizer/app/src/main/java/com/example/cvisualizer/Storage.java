@@ -1,3 +1,7 @@
+/*
+Storage class, am image gallery that retreives saved images from the database, and uses
+recycleview (ImageAdaptor.java) subclass to display
+ */
 package com.example.cvisualizer;
 
 import android.content.Intent;
@@ -28,6 +32,10 @@ public class Storage extends AppCompatActivity implements View.OnClickListener
     RecyclerView recyclerView;
     ImageAdapter adapter;
 
+    /**
+     * Retrieving and calling recyelview adapter classes to have information sent to
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +69,10 @@ public class Storage extends AppCompatActivity implements View.OnClickListener
         });
     }
 
+    /**
+     * Returns to the camera class
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.prevButton){
