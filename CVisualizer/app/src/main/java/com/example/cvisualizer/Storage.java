@@ -1,7 +1,3 @@
-/*
-Storage class, am image gallery that retreives saved images from the database, and uses
-recycleview (ImageAdaptor.java) subclass to display
- */
 package com.example.cvisualizer;
 
 import android.content.Intent;
@@ -11,7 +7,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.net.Uri;
 import android.view.View;
-
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.ListResult;
@@ -22,6 +17,9 @@ import java.util.ArrayList;
 /**
  * This body of code was borrowed from:
  * https://www.geeksforgeeks.org/how-to-view-all-the-uploaded-images-in-firebase-storage/
+ *
+ * Storage class, am image gallery that retreives saved images from the database, and uses
+ * recycleview (ImageAdaptor.java) subclass to display
  */
 public class Storage extends AppCompatActivity implements View.OnClickListener
 {

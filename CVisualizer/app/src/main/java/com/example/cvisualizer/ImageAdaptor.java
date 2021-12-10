@@ -1,3 +1,4 @@
+
 /*
 This class is the adapter that binds together the recycleview of the activity_storage.xml with the
 layout_storedimages to show saved pictures from the database passed in as an arraylist from the parent class.
@@ -14,7 +15,6 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
-
 import java.util.ArrayList;
 
 /**

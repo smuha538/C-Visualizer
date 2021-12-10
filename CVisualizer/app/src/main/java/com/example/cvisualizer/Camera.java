@@ -14,7 +14,6 @@ import androidx.camera.view.PreviewView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LifecycleOwner;
-
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,15 +21,14 @@ import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
 import com.example.cvisualizer.R;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.firebase.auth.FirebaseAuth;
-
 import java.io.File;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
+
 
 /**
  * The Camera class that provides the camera functionality mainly used for the app.
@@ -141,6 +139,7 @@ public class Camera extends AppCompatActivity implements View.OnClickListener{
                         intent.putExtra("name", "");
                         intent.putExtra("path", photoFile.getAbsoluteFile());
                         startActivity(intent);
+
                     }
 
                     @Override

@@ -1,8 +1,3 @@
-/*
- * This class is the adapter that binds together the recycleview of the activity_color_edit.xml with the
- * layout_storedimages to show favourite colors from the database passed in as a list from the parent class.
- */
-
 package com.example.cvisualizer;
 
 import android.app.Activity;
@@ -18,6 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+/*
+ * This class is the adapter that binds together the recycleview of the activity_color_edit.xml with the
+ * layout_storedimages to show favourite colors from the database passed in as a list from the parent class.
+ */
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
     private ArrayList<Integer> favColors;
